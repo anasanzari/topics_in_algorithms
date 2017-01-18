@@ -24,7 +24,7 @@ func TestSample(t *testing.T) {
     graph[4] = list.New()
 
     graph[0].PushBack(1)
-    //graph[1].PushBack(0)
+    graph[1].PushBack(0)
 
     graph[0].PushBack(2)
     graph[2].PushBack(0)
