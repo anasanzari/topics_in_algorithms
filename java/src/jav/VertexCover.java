@@ -22,6 +22,14 @@ public class VertexCover {
 			graph.addEdge(a,b);
 		}
 		
+		System.out.print("Enter k:");
+		int k = sc.nextInt();
+		if(vertex_cover(graph,k)){
+			System.out.println("Yes Instance");
+		}else{
+			System.out.println("No Instance");
+		}
+		
 		
 	}
 	
@@ -40,7 +48,6 @@ public class VertexCover {
 				int node = entry.getKey();
 				HashSet<Integer> neighbours = entry.getValue();
 				if(neighbours.size()==0){
-					System.out.println("remove"+node);
 					graph.remove(node, neighbours, false);
 					iter.remove();
 				}
@@ -53,7 +60,6 @@ public class VertexCover {
 				int node = entry.getKey();
 				HashSet<Integer> neighbours = entry.getValue();
 				if(neighbours.size()>k){
-					System.out.println("remove"+node);
 					graph.remove(node, neighbours, false);
 					iter.remove();
 					k_dash--;
@@ -63,30 +69,22 @@ public class VertexCover {
 			if(k_dash<0||graph.edges.size()>k_dash*k_dash) return false;
 				
 			if(graph.edges.size()>0){
-				System.out.println(graph.edges.size());
+				//pick an edge and branch
 				Iterator<Edge> it = graph.edges.iterator();
-				if(!it.hasNext()){
-					System.out.println("Should be the case.");
-					return false;
-				}
 				Edge e = it.next();
-				System.out.println("e:"+e.u+":"+e.v);
-					Graph g1 = (Graph) graph.clone();
+				Graph g1 = (Graph) graph.clone();
 					
-					g1.remove(e.u,g1.graph.get(e.u),true);
-					if(vertex_cover(g1, k_dash)){
-						return true;
-					}
+				g1.remove(e.u,g1.graph.get(e.u),true);
+				if(vertex_cover(g1, k_dash)){
+					return true;
+				}
 	
-					Graph g2 = (Graph) graph.clone();
-					g2.remove(e.v, g2.graph.get(e.v), true);
-					return  vertex_cover(g2, k_dash);
-					
-				
+				Graph g2 = (Graph) graph.clone();
+				g2.remove(e.v, g2.graph.get(e.v), true);
+				return  vertex_cover(g2, k_dash);
 							
 			}else{
 				//no edge to cover
-				System.out.println(graph.edges);
 				return true;
 			}
 		

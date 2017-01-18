@@ -41,16 +41,12 @@ public class Graph implements Cloneable{
 	}
 	
 	public void remove(int node,  HashSet<Integer> neighbours, boolean flag){
-		//graph.remove(node);
 		if(flag) graph.remove(node);
 		Iterator<Integer> iter = neighbours.iterator();
 		while(iter.hasNext()){
 			int neighbour = iter.next();
 			graph.get(neighbour).remove(node);
-			System.out.println("before"+edges.size());
-			System.out.println("e:"+node+":"+neighbour);
 			edges.remove(new Edge(node, neighbour));
-			System.out.println("after"+edges.size());
 		}
 	}
 	

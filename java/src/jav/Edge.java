@@ -9,7 +9,7 @@ public class Edge {
 		if(u>v){
 			int t = u;
 			u = v;
-			v = u;
+			v = t;
 		}
 		this.u = u;
 		this.v = v;
