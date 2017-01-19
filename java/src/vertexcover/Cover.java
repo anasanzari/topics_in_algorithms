@@ -15,6 +15,14 @@ public class Cover {
 		isCoverable = false;
 	}
 	
+	public void printCover(){
+		System.out.print("Cover: { ");
+		for (Integer node : nodes) {
+			System.out.print(node+" ");
+		}
+		System.out.print("}\n");
+	}
+	
 	
 	
 

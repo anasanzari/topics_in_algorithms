@@ -11,12 +11,15 @@ public class VertexCover {
 	public static void main(String[] args) {
 		
 		Scanner sc = new Scanner(System.in);
-		System.out.print("Enter n:");
-		int n = sc.nextInt();
+		System.out.print("Enter no of vertices:");
+		int v = sc.nextInt();//ignored!
+		System.out.print("Enter no of edges:");
+		int e = sc.nextInt();
+		
 		Graph graph = new Graph();
 		
 		System.out.println("Enter edges: ");
-		for(int i = 0;i <n;i++){
+		for(int i = 0;i <e;i++){
 			int a = sc.nextInt();
 			int b = sc.nextInt();
 			graph.addEdge(a,b);
@@ -29,9 +32,10 @@ public class VertexCover {
 		}else{
 			System.out.println("No Instance");
 		}
-		
-		
+	
 	}
+	
+	
 	
 	public static Cover vertex_cover(Graph graph, int k){
 
@@ -71,8 +75,10 @@ public class VertexCover {
 			Edge e = it.next();
 
 			Graph g1 = (Graph) graph.copy();
+			Graph g2 = graph.copy();
+			
 			g1.remove(e.u, g1.graph.get(e.u));
-			Cover subcover = vertex_cover(g1, k_dash);
+			Cover subcover = vertex_cover(g1, k_dash-1);
 			if (subcover.isCoverable) {
 				cover.isCoverable = true;
 				cover.nodes.add(e.u);
@@ -80,9 +86,9 @@ public class VertexCover {
 				return cover;
 			}
 
-			Graph g2 = graph.copy();
+
 			g2.remove(e.v, g2.graph.get(e.v));
-			subcover = vertex_cover(g2, k_dash);
+			subcover = vertex_cover(g2, k_dash-1);
 			if (subcover.isCoverable) {
 				cover.isCoverable = true;
 				cover.nodes.add(e.v);

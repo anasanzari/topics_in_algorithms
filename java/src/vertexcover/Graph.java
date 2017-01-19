@@ -20,9 +20,13 @@ public class Graph {
 	}
 	
 	public Graph copy(){
+		//deep copy problem.
 		Graph copy = new Graph();
-		copy.graph = (HashMap<Integer, HashSet<Integer>>) this.graph.clone();
-		copy.edges = (HashSet<Edge>) this.edges.clone();
+		copy.graph = new HashMap<Integer, HashSet<Integer>>();
+		for( Entry<Integer, HashSet<Integer>> entry : graph.entrySet()){
+			copy.graph.put(entry.getKey(), new HashSet<Integer>(entry.getValue()));
+		}
+		copy.edges = new HashSet<Edge>(edges);
 		return copy;
 	}
 	
@@ -47,12 +51,31 @@ public class Graph {
 			
 	}
 	
+	public void printGraph(){
+		//System.out.println("x--------------x");
+		for (Entry<Integer, HashSet<Integer>> entry : graph.entrySet()) {
+
+			int node = entry.getKey();
+			HashSet<Integer> neighbours = entry.getValue();
+			
+			System.out.print(node+":");
+			for(Integer e : neighbours){
+				System.out.print(e+" ");
+			}
+			System.out.println("");
+		}
+		//System.out.println("x--------------x");
+	}
+	
 	public void remove(int node,  HashSet<Integer> neighbours){
 		graph.remove(node);
 		Iterator<Integer> iter = neighbours.iterator();
 		while(iter.hasNext()){
 			int neighbour = iter.next();
-			graph.get(neighbour).remove(node);
+			if(graph.containsKey(neighbour)){
+				//since we're working on a copy. Neighbours could be stale.
+				graph.get(neighbour).remove(node);
+			}
 			edges.remove(new Edge(node, neighbour));
 		}
 	}

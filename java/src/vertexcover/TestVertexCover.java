@@ -1,6 +1,9 @@
 package vertexcover;
 
+import java.io.File;
+import java.net.URL;
 import java.util.Iterator;
+import java.util.Scanner;
 
 import org.junit.Test;
 
@@ -15,11 +18,24 @@ public class TestVertexCover {
 			return;
 		}
 		System.out.println("Yes Instance");
-		System.out.print("Cover: { ");
-		for (Integer node : cover.nodes) {
-			System.out.print(node+" ");
+		cover.printCover();
+		
+		
+	}
+	
+	public Graph readGraph(Scanner sc){
+		
+		int v = sc.nextInt();//ignored!
+		int e = sc.nextInt();
+		
+		Graph graph = new Graph();
+		for(int i = 0;i <e;i++){
+			int a = sc.nextInt();
+			int b = sc.nextInt();
+			graph.addEdge(a,b);
 		}
-		System.out.print("}\n");
+		
+		return graph;
 	}
 	
 	@Test
@@ -108,6 +124,23 @@ public class TestVertexCover {
 		Cover cover = VertexCover.vertex_cover(graph, 2);
 		printCover(cover);
 	    assertEquals(false,cover.isCoverable);
+	}
+	
+	@Test
+	public void bigTest1(){
+		try{
+			
+			Scanner sc = new Scanner(new File("./tests/input1.txt"));
+			Graph g = readGraph(sc);
+			int k = sc.nextInt();
+			sc.close();
+			Cover cover = VertexCover.vertex_cover(g, k);
+			printCover(cover);
+		    assertEquals(true,cover.isCoverable);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
 	}
 
 }
