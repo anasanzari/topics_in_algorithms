@@ -1,4 +1,6 @@
-package jav;
+package vertexcover;
+
+import java.util.Iterator;
 
 import org.junit.Test;
 
@@ -6,8 +8,26 @@ import static org.junit.Assert.assertEquals;
 
 public class TestVertexCover {
 	
+	public void printCover(Cover cover){
+		
+		if(!cover.isCoverable){
+			System.out.println("No Instance");
+			return;
+		}
+		System.out.println("Yes Instance");
+		System.out.print("Cover: { ");
+		for (Integer node : cover.nodes) {
+			System.out.print(node+" ");
+		}
+		System.out.print("}\n");
+	}
+	
 	@Test
 	public void simpleTest() {	
+		
+		// 1--0--2
+		//    |     {0,3} covers, not possible by 1 vertices
+		//    3--4
 		
 		Graph graph = new Graph();
 		
@@ -19,13 +39,18 @@ public class TestVertexCover {
 		
 		graph.addEdge(3, 4);
 		
-
-	    assertEquals(true,VertexCover.vertex_cover(graph, 2));
+		Cover cover = VertexCover.vertex_cover(graph, 2);
+		printCover(cover);
+	    assertEquals(true,cover.isCoverable);
 	}
 	
 	@Test
 	public void simpleTest2() {	
 		
+		// 1--0--2
+		//    |     {0,3} covers, not possible by 1 vertices
+		//    3--4
+		
 		Graph graph = new Graph();
 		
 		graph.addEdge(0, 1);
@@ -36,8 +61,9 @@ public class TestVertexCover {
 		
 		graph.addEdge(3, 4);
 		
-
-	    assertEquals(false,VertexCover.vertex_cover(graph, 1));
+		Cover cover = VertexCover.vertex_cover(graph, 1);
+		printCover(cover);
+	    assertEquals(false,cover.isCoverable);
 	}
 	
 	@Test
@@ -57,8 +83,9 @@ public class TestVertexCover {
 		graph.addEdge(2,5);
 		graph.addEdge(2,1);
 		
-
-	    assertEquals(true,VertexCover.vertex_cover(graph, 3));
+		Cover cover = VertexCover.vertex_cover(graph, 3);
+		printCover(cover);
+	    assertEquals(true,cover.isCoverable);
 	}
 	
 	@Test
@@ -78,8 +105,9 @@ public class TestVertexCover {
 		graph.addEdge(2,5);
 		graph.addEdge(2,1);
 		
-
-	    assertEquals(false,VertexCover.vertex_cover(graph, 2));
+		Cover cover = VertexCover.vertex_cover(graph, 2);
+		printCover(cover);
+	    assertEquals(false,cover.isCoverable);
 	}
 
 }

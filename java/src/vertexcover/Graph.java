@@ -1,4 +1,4 @@
-package jav;
+package vertexcover;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.Map.Entry;
 
-public class Graph implements Cloneable{
+public class Graph {
 	
 	public HashMap<Integer, HashSet<Integer>> graph;
 	public HashSet<Edge> edges;
@@ -17,6 +17,13 @@ public class Graph implements Cloneable{
 			
 		graph = new HashMap<Integer, HashSet<Integer>>();
 		edges = new HashSet<Edge>();
+	}
+	
+	public Graph copy(){
+		Graph copy = new Graph();
+		copy.graph = (HashMap<Integer, HashSet<Integer>>) this.graph.clone();
+		copy.edges = (HashSet<Edge>) this.edges.clone();
+		return copy;
 	}
 	
 	public int size(){
@@ -40,8 +47,8 @@ public class Graph implements Cloneable{
 			
 	}
 	
-	public void remove(int node,  HashSet<Integer> neighbours, boolean flag){
-		if(flag) graph.remove(node);
+	public void remove(int node,  HashSet<Integer> neighbours){
+		graph.remove(node);
 		Iterator<Integer> iter = neighbours.iterator();
 		while(iter.hasNext()){
 			int neighbour = iter.next();
@@ -50,14 +57,4 @@ public class Graph implements Cloneable{
 		}
 	}
 	
-	public Iterator<Entry<Integer, HashSet<Integer>>> iterator(){
-		Set<Entry<Integer, HashSet<Integer>>> set = graph.entrySet();
-		Iterator<Entry<Integer, HashSet<Integer>>> iter = set.iterator();
-		return iter;
-	}
-	
-		
-	public Object clone()throws CloneNotSupportedException{  
-		return super.clone();
-	}
 }

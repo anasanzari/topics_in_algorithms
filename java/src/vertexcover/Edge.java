@@ -1,4 +1,4 @@
-package jav;
+package vertexcover;
 
 public class Edge {
 	
